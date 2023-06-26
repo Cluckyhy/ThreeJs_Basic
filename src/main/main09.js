@@ -3,12 +3,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // 导入动画库
 import gsap from "gsap";
-// 导入dat.gui
-import * as dat from "dat.gui";
 
 // console.log(THREE);
 
-// 目标：应用图形用户界面更改变量
+// 目标：js控制画面全屏
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -45,44 +43,6 @@ cube.rotation.set(Math.PI / 4, 0, 0, "XYZ");
 
 // 将几何体添加到场景中
 scene.add(cube);
-
-// 创建GUI界面
-const gui = new dat.GUI();
-gui
-  .add(cube.position, "x")
-  .min(0)
-  .max(10)
-  .step(0.1)
-  .name("移动x轴")
-  .onChange((value) => {
-    console.log("值被修改了", value);
-  })
-  .onFinishChange((value) => {
-    console.log("完全停下来", value);
-  });
-
-// 修改物体颜色
-const params = {
-  color: "#00ff00",
-  fn: () => {
-    // 让立方体运动起来
-    gsap.to(cube.position, { x: 5, duration: 2, yoyo: true, repeat: -1 });
-  },
-};
-
-gui.addColor(params, "color").onChange((value) => {
-  console.log("值被改变了", value);
-  cube.material.color.set(value);
-});
-
-// 设置选项框
-gui.add(cube, "visible").name("是否显示");
-
-// 创建文件夹
-var folder = gui.addFolder("设置立方体");
-folder.add(cube.material, "wireframe");
-// 设置按钮点击触发某个事件
-folder.add(params, "fn").name("点击立方体运动");
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer();
