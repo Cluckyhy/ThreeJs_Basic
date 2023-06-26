@@ -1,10 +1,8 @@
 import * as THREE from "three";
-// 导入轨道控制器
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // console.log(THREE);
 
-// 目标：使用控制器查看3d物体
+// 目标：了解three.js最基本的内容
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -42,15 +40,4 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // 使用渲染器，通过相机将场景渲染出来
-// renderer.render(scene, camera);
-
-// 创建轨道控制器
-const controls = new OrbitControls(camera, renderer.domElement);
-
-function render() {
-  renderer.render(scene, camera);
-  // 渲染下一帧的时候就会调用render函数
-  requestAnimationFrame(render);
-}
-
-render();
+renderer.render(scene, camera);
