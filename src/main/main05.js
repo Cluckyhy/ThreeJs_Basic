@@ -1,12 +1,10 @@
 import * as THREE from "three";
 // 导入轨道控制器
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// 导入动画库
-import gsap from "gsap";
 
 // console.log(THREE);
 
-// 目标：掌握gsap设置动画效果
+// 目标：requestAnimationFrame 时间参数-控制物体动画
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -63,58 +61,19 @@ const controls = new OrbitControls(camera, renderer.domElement);
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
-// 设置时钟
-const clock = new THREE.Clock();
+function render(time) {
+  console.log(time);
+  // cube.position.x += 0.01;
+  cube.rotation.x += 0.01;
+  // if (cube.position.x >= 5) {
+  //   cube.position.x = 0;
+  // }
 
-// 设置动画
-var animate1 = gsap.to(cube.position, {
-  x: 5,
-  duration: 5,
-  ease: "power1.inOut",
-  // 设置重复次数，无限次循环就是-1
-  repeat: -1,
-  // 往返运动
-  yoyo: true,
-  onComplete: () => {
-    console.log("动画完成了");
-  },
-  onStart: () => {
-    console.log("动画开始了");
-  },
-});
-gsap.to(cube.rotation, {
-  x: 2 * Math.PI,
-  duration: 5,
-  ease: "power1.inOut",
-  // 设置重复次数，无限次循环就是-1
-  repeat: 2,
-  // 往返运动
-  yoyo: true,
-  // 延迟时间
-  delay: 2,
-});
-
-window.addEventListener("dblclick", () => {
-  console.log(animate1);
-  if (animate1.isActive()) {
-    // 暂停
-    animate1.pause();
-  } else {
-    // 恢复
-    animate1.resume();
+  let t = (time / 1000) % 5;
+  cube.position.x = t * 1;
+  if (cube.position.x >= 5) {
+    cube.position.x = 0;
   }
-});
-
-function render() {
-  // // 获取时钟运行的总时长
-  // let time = clock.getElapsedTime();
-  // let deltaTime = clock.getDelta();
-  // console.log("时钟运行的总时长：", time);
-  // console.log("两次获取时间的间隔时间：", deltaTime);
-
-  // let t = time % 5;
-  // cube.position.x = t * 1;
-
   renderer.render(scene, camera);
   // 渲染下一帧的时候就会调用render函数
   requestAnimationFrame(render);
