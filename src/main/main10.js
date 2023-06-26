@@ -42,6 +42,56 @@ const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
 
+// 修改物体的位置
+// cube.position.set(5, 0, 0);
+// cube.position.x = 3;
+
+// 缩放
+// cube.scale.set(4, 3, 2);
+
+// 旋转
+cube.rotation.set(Math.PI / 4, 0, 0, "XYZ");
+
+// 将几何体添加到场景中
+scene.add(cube);
+
+// 创建GUI界面
+const gui = new dat.GUI();
+gui
+  .add(cube.position, "x")
+  .min(0)
+  .max(10)
+  .step(0.1)
+  .name("移动x轴")
+  .onChange((value) => {
+    console.log("值被修改了", value);
+  })
+  .onFinishChange((value) => {
+    console.log("完全停下来", value);
+  });
+
+// 修改物体颜色
+const params = {
+  color: "#00ff00",
+  fn: () => {
+    // 让立方体运动起来
+    gsap.to(cube.position, { x: 5, duration: 2, yoyo: true, repeat: -1 });
+  },
+};
+
+gui.addColor(params, "color").onChange((value) => {
+  console.log("值被改变了", value);
+  cube.material.color.set(value);
+});
+
+// 设置选项框
+gui.add(cube, "visible").name("是否显示");
+
+// 创建文件夹
+var folder = gui.addFolder("设置立方体");
+folder.add(cube.material, "wireframe");
+// 设置按钮点击触发某个事件
+folder.add(params, "fn").name("点击立方体运动");
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer();
@@ -67,6 +117,34 @@ scene.add(axesHelper);
 
 // 设置时钟
 const clock = new THREE.Clock();
+
+// 设置动画
+// var animate1 = gsap.to(cube.position, {
+//   x: 5,
+//   duration: 5,
+//   ease: "power1.inOut",
+//   // 设置重复次数，无限次循环就是-1
+//   repeat: -1,
+//   // 往返运动
+//   yoyo: true,
+//   onComplete: () => {
+//     console.log("动画完成了");
+//   },
+//   onStart: () => {
+//     console.log("动画开始了");
+//   },
+// });
+// gsap.to(cube.rotation, {
+//   x: 2 * Math.PI,
+//   duration: 5,
+//   ease: "power1.inOut",
+//   // 设置重复次数，无限次循环就是-1
+//   repeat: 2,
+//   // 往返运动
+//   yoyo: true,
+//   // 延迟时间
+//   delay: 2,
+// });
 
 window.addEventListener("dblclick", () => {
   // console.log(animate1);
