@@ -4,7 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // console.log(THREE);
 
-// 目标：requestAnimationFrame 时间参数-控制物体动画
+// 目标：控制3d物体的移动
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -33,12 +33,6 @@ const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // cube.position.set(5, 0, 0);
 // cube.position.x = 3;
 
-// 缩放
-cube.scale.set(4, 3, 2);
-
-// 旋转
-cube.rotation.set(Math.PI / 4, 0, 0, "XYZ");
-
 // 将几何体添加到场景中
 scene.add(cube);
 
@@ -61,16 +55,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
-function render(time) {
-  console.log(time);
-  // cube.position.x += 0.01;
-  // cube.rotation.x += 0.01;
-  // if (cube.position.x >= 5) {
-  //   cube.position.x = 0;
-  // }
-
-  let t = (time / 1000) % 5;
-  cube.position.x = t * 1;
+function render() {
+  cube.position.x += 0.01;
   if (cube.position.x >= 5) {
     cube.position.x = 0;
   }
