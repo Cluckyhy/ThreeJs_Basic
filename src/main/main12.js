@@ -8,7 +8,7 @@ import * as dat from "dat.gui";
 
 // console.log(THREE);
 
-// 目标：学习纹理的属性
+// 目标：打造酷炫的三角形
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -27,34 +27,32 @@ scene.add(camera);
 
 // 添加物体
 // 创建几何体
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-// 导入纹理
-const textureLoader = new THREE.TextureLoader();
-const doorColorTexture = textureLoader.load("../assets/img/xi.jpg");
+for (let i = 0; i < 50; i++) {
+  // 每一个三角形，需要三个顶点，每个顶点需要3个值
+  const geometry = new THREE.BufferGeometry(1, 1, 1);
+  const positionArray = new Float32Array(9);
+  for (let j = 0; j < 9; j++) {
+    positionArray[j] = Math.random() * 10 - 5;
+  }
+  geometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(positionArray, 3)
+  );
 
-// 纹理的偏移
-doorColorTexture.offset.x = 0.3;
-doorColorTexture.offset.y = 0.6;
+  let color = new THREE.Color(Math.random(), Math.random(), Math.random());
+  // 创建材质
+  const material = new THREE.MeshBasicMaterial({
+    color: color,
+    transparent: true,
+    opacity: 0.5,
+  });
 
-// 纹理的旋转
-// 设置旋转的原点
-doorColorTexture.center.set(0.5, 0.5);
-doorColorTexture.rotation = Math.PI / 4;
+  // 根据几何体和材质创建物体
+  const mesh = new THREE.Mesh(geometry, material);
 
-// 设置纹理的重复
-doorColorTexture.repeat.set(2, 3);
-// 设置纹理重复的模式
-doorColorTexture.wrapS = THREE.RepeatWrapping;
-doorColorTexture.wrapT = THREE.MirroredRepeatWrapping;
-
-// 材质
-const basicMaterial = new THREE.MeshBasicMaterial({
-  color: "#ffff00",
-  map: doorColorTexture,
-});
-const cube = new THREE.Mesh(cubeGeometry, basicMaterial);
-scene.add(cube);
+  scene.add(mesh);
+}
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer();

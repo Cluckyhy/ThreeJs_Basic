@@ -8,7 +8,7 @@ import * as dat from "dat.gui";
 
 // console.log(THREE);
 
-// 目标：学习纹理的属性
+// 目标：基本立体几何体，设置纹理
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -32,21 +32,6 @@ const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 // 导入纹理
 const textureLoader = new THREE.TextureLoader();
 const doorColorTexture = textureLoader.load("../assets/img/xi.jpg");
-
-// 纹理的偏移
-doorColorTexture.offset.x = 0.3;
-doorColorTexture.offset.y = 0.6;
-
-// 纹理的旋转
-// 设置旋转的原点
-doorColorTexture.center.set(0.5, 0.5);
-doorColorTexture.rotation = Math.PI / 4;
-
-// 设置纹理的重复
-doorColorTexture.repeat.set(2, 3);
-// 设置纹理重复的模式
-doorColorTexture.wrapS = THREE.RepeatWrapping;
-doorColorTexture.wrapT = THREE.MirroredRepeatWrapping;
 
 // 材质
 const basicMaterial = new THREE.MeshBasicMaterial({
