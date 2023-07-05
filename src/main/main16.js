@@ -8,7 +8,7 @@ import * as dat from "dat.gui";
 
 // console.log(THREE);
 
-// 目标：纹理加载进度情况
+// 目标：标准网络材质(MeshStandarMaterial)
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -29,28 +29,9 @@ scene.add(camera);
 // 创建几何体
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-// 单张纹理图的加载
-const event = {};
-event.onLoad = function () {
-  console.log("图片加载完成");
-};
-
-event.onProgress = function (e) {
-  console.log(e);
-  console.log("图片加载进度");
-};
-event.onError = function (e) {
-  console.log("图片加载失败");
-};
-
 // 导入纹理
 const textureLoader = new THREE.TextureLoader();
-const doorColorTexture = textureLoader.load(
-  "./texture/img/xi.jpg",
-  event.onLoad,
-  event.onProgress,
-  event.onError
-);
+const doorColorTexture = textureLoader.load("./texture/img/xi.jpg");
 const doorAplhaTexture = textureLoader.load("./texture/img/xi.jpg");
 
 // 纹理的偏移

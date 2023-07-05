@@ -8,7 +8,7 @@ import * as dat from "dat.gui";
 
 // console.log(THREE);
 
-// 目标：纹理加载进度情况
+// 目标：学习透明材质与透明纹理
 
 // 1、创建场景
 const scene = new THREE.Scene();
@@ -29,28 +29,9 @@ scene.add(camera);
 // 创建几何体
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-// 单张纹理图的加载
-const event = {};
-event.onLoad = function () {
-  console.log("图片加载完成");
-};
-
-event.onProgress = function (e) {
-  console.log(e);
-  console.log("图片加载进度");
-};
-event.onError = function (e) {
-  console.log("图片加载失败");
-};
-
 // 导入纹理
 const textureLoader = new THREE.TextureLoader();
-const doorColorTexture = textureLoader.load(
-  "./texture/img/xi.jpg",
-  event.onLoad,
-  event.onProgress,
-  event.onError
-);
+const doorColorTexture = textureLoader.load("./texture/img/xi.jpg");
 const doorAplhaTexture = textureLoader.load("./texture/img/xi.jpg");
 
 // 纹理的偏移
@@ -69,7 +50,7 @@ doorColorTexture.wrapS = THREE.RepeatWrapping;
 doorColorTexture.wrapT = THREE.MirroredRepeatWrapping;
 
 // 材质
-const material = new THREE.MeshStandardMaterial({
+const basicMaterial = new THREE.MeshBasicMaterial({
   color: "#ffff00",
   map: doorColorTexture,
   alphaMap: doorAplhaTexture,
@@ -77,23 +58,13 @@ const material = new THREE.MeshStandardMaterial({
   opacity: 0.5,
   side: THREE.DoubleSide,
 });
-const cube = new THREE.Mesh(cubeGeometry, material);
+const cube = new THREE.Mesh(cubeGeometry, basicMaterial);
 scene.add(cube);
 
 // 添加平面
-const plan = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+const plan = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), basicMaterial);
 plan.position.set(3, 0, 0);
 scene.add(plan);
-
-// 灯光
-// 环境光（四面八方打过来的）
-const light = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(light);
-
-// 直线光
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(10, 10, 10);
-scene.add(directionalLight);
 
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer();
