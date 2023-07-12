@@ -28,19 +28,20 @@ scene.add(camera);
 // 添加物体
 // 创建几何体
 const geometry = new THREE.BufferGeometry(1, 1, 1);
-const vertices = new Float32Array([
-  -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0,
-  -1.0, -1.0, 1.0,
-]);
-geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+// const vertices = new Float32Array([
+//   -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0,
+//   -1.0, -1.0, 1.0,
+// ]);
+// geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
 
 // 创建材质
 const material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
 
 // 根据几何体和材质创建物体
-const mesh = new THREE.Mesh(geometry, material);
+const cube = new THREE.Mesh(geometry, material);
 
-scene.add(mesh);
+// scene.add(mesh);
+scene.add(cube);
 
 // 修改物体的位置
 // cube.position.set(5, 0, 0);
@@ -53,7 +54,7 @@ scene.add(mesh);
 cube.rotation.set(Math.PI / 4, 0, 0, "XYZ");
 
 // 将几何体添加到场景中
-scene.add(cube);
+// scene.add(cube);
 
 // 创建GUI界面
 const gui = new dat.GUI();
